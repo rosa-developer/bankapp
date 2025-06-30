@@ -1,8 +1,7 @@
-
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { ArrowUpRight, ArrowDownLeft, CreditCard, Coffee, Gas, ShoppingBag, Wifi } from "lucide-react";
+import { ArrowUpRight, ArrowDownLeft, CreditCard, Coffee, Fuel, ShoppingBag, Wifi } from "lucide-react";
 
 const transactions = [
   {
@@ -29,7 +28,7 @@ const transactions = [
     amount: -45.20,
     date: "Dec 28, 5:45 PM",
     category: "Transportation",
-    icon: Gas,
+    icon: Fuel,
     status: "completed"
   },
   {
