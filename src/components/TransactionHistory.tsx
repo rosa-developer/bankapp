@@ -2,7 +2,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { ArrowUpRight, ArrowDownLeft, CreditCard, Coffee, Fuel, ShoppingBag, Wifi } from "lucide-react";
+import { ArrowUpRight, ArrowDownLeft, CreditCard, Coffee, Fuel, ShoppingBag, Wifi, ChevronRight } from "lucide-react";
 
 const transactions = [
   {
@@ -54,40 +54,59 @@ const transactions = [
 
 export const TransactionHistory = () => {
   return (
-    <Card className="border-0 shadow-none">
-      <CardHeader className="pb-4">
+    <Card className="border-0 shadow-none bg-transparent">
+      <CardHeader className="pb-6">
         <div className="flex justify-between items-center">
-          <div className="flex items-center gap-3">
-            <div className="w-1 h-8 bg-gradient-to-b from-blue-500 to-purple-600 rounded-full"></div>
+          <div className="flex items-center gap-4">
+            <div className="w-2 h-10 bg-gradient-to-b from-blue-500 via-purple-500 to-emerald-500 rounded-full shadow-lg"></div>
             <div>
-              <CardTitle className="text-2xl text-gray-800">Recent Transactions</CardTitle>
-              <CardDescription className="text-gray-600">Your latest account activity</CardDescription>
+              <CardTitle className="text-3xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
+                Recent Transactions
+              </CardTitle>
+              <CardDescription className="text-gray-600 font-medium text-lg">
+                Your latest financial activity
+              </CardDescription>
             </div>
           </div>
-          <Button variant="outline" size="sm" className="hover:bg-gray-50">
+          <Button variant="outline" size="sm" className="hover:bg-gray-50 border-gray-200 shadow-sm hover:shadow-md transition-all duration-300">
             View All
+            <ChevronRight className="w-4 h-4 ml-2" />
           </Button>
         </div>
       </CardHeader>
       <CardContent>
         <div className="space-y-3">
-          {transactions.map((transaction) => {
+          {transactions.map((transaction, index) => {
             const IconComponent = transaction.icon;
             const isIncome = transaction.amount > 0;
             
             return (
-              <div key={transaction.id} className="flex items-center justify-between p-4 rounded-xl hover:bg-gray-50 transition-all duration-200 border border-gray-100 hover:border-gray-200 hover:shadow-sm">
-                <div className="flex items-center space-x-4">
-                  <div className={`p-3 rounded-full ${isIncome ? 'bg-green-100' : 'bg-blue-100'} shadow-sm`}>
-                    <IconComponent className={`w-5 h-5 ${isIncome ? 'text-green-600' : 'text-blue-600'}`} />
+              <div 
+                key={transaction.id} 
+                className="group flex items-center justify-between p-6 rounded-2xl hover:bg-white/80 transition-all duration-300 border border-gray-100/80 hover:border-gray-200 hover:shadow-lg backdrop-blur-sm hover:-translate-y-1"
+                style={{ animationDelay: `${index * 100}ms` }}
+              >
+                <div className="flex items-center space-x-5">
+                  <div className={`w-14 h-14 rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-all duration-300 ${
+                    isIncome 
+                      ? 'bg-gradient-to-br from-emerald-400 to-green-500' 
+                      : 'bg-gradient-to-br from-blue-400 to-indigo-500'
+                  }`}>
+                    <IconComponent className="w-6 h-6 text-white" />
                   </div>
                   <div>
-                    <p className="font-semibold text-gray-800">{transaction.description}</p>
-                    <div className="flex items-center space-x-3 mt-1">
-                      <p className="text-sm text-gray-500">{transaction.date}</p>
+                    <p className="font-bold text-lg text-gray-900 group-hover:text-gray-800 transition-colors">
+                      {transaction.description}
+                    </p>
+                    <div className="flex items-center space-x-4 mt-2">
+                      <p className="text-sm text-gray-500 font-medium">{transaction.date}</p>
                       <Badge 
                         variant={transaction.status === "pending" ? "secondary" : "outline"} 
-                        className={`text-xs ${transaction.status === "pending" ? 'bg-yellow-100 text-yellow-800' : 'bg-green-100 text-green-800'}`}
+                        className={`text-xs font-semibold px-3 py-1 ${
+                          transaction.status === "pending" 
+                            ? 'bg-amber-100 text-amber-800 border-amber-200' 
+                            : 'bg-emerald-100 text-emerald-800 border-emerald-200'
+                        }`}
                       >
                         {transaction.status}
                       </Badge>
@@ -95,10 +114,14 @@ export const TransactionHistory = () => {
                   </div>
                 </div>
                 <div className="text-right">
-                  <p className={`font-bold text-lg ${isIncome ? 'text-green-600' : 'text-red-600'}`}>
+                  <p className={`font-bold text-2xl transition-all duration-300 ${
+                    isIncome 
+                      ? 'bg-gradient-to-r from-emerald-600 to-green-600 bg-clip-text text-transparent' 
+                      : 'bg-gradient-to-r from-red-600 to-rose-600 bg-clip-text text-transparent'
+                  }`}>
                     {isIncome ? '+' : ''}${Math.abs(transaction.amount).toFixed(2)}
                   </p>
-                  <p className="text-sm text-gray-500">{transaction.category}</p>
+                  <p className="text-sm text-gray-500 font-medium mt-1">{transaction.category}</p>
                 </div>
               </div>
             );

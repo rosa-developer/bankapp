@@ -9,7 +9,7 @@ import { TransactionHistory } from "@/components/TransactionHistory";
 import { TransferModal } from "@/components/TransferModal";
 import { QuickActions } from "@/components/QuickActions";
 import { BalanceChart } from "@/components/BalanceChart";
-import { CreditCard, TrendingUp, Shield, Bell, Sparkles } from "lucide-react";
+import { CreditCard, TrendingUp, Shield, Bell, Sparkles, ChevronRight } from "lucide-react";
 
 const Index = () => {
   const [isTransferModalOpen, setIsTransferModalOpen] = useState(false);
@@ -23,25 +23,37 @@ const Index = () => {
   const totalBalance = accounts.filter(acc => acc.type !== "credit").reduce((sum, acc) => sum + acc.balance, 0);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 p-4">
-      <div className="max-w-7xl mx-auto space-y-8">
-        {/* Enhanced Header */}
-        <div className="relative overflow-hidden bg-gradient-to-r from-blue-600 to-purple-700 rounded-2xl p-8 shadow-xl">
-          <div className="absolute inset-0 bg-black/10"></div>
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50 p-4 relative overflow-hidden">
+      {/* Background decorative elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-full blur-3xl"></div>
+        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-tr from-emerald-400/20 to-cyan-400/20 rounded-full blur-3xl"></div>
+      </div>
+
+      <div className="max-w-7xl mx-auto space-y-8 relative z-10">
+        {/* Modern Header with Glassmorphism */}
+        <div className="relative overflow-hidden bg-white/40 backdrop-blur-xl border border-white/20 rounded-3xl p-8 shadow-2xl">
+          <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 via-purple-600/10 to-emerald-600/10"></div>
           <div className="relative flex justify-between items-center">
-            <div className="text-white">
-              <div className="flex items-center gap-3 mb-2">
-                <Sparkles className="w-8 h-8 text-yellow-300" />
-                <h1 className="text-4xl font-bold">Welcome back, John</h1>
+            <div>
+              <div className="flex items-center gap-4 mb-3">
+                <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg">
+                  <Sparkles className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <h1 className="text-4xl font-bold bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 bg-clip-text text-transparent">
+                    Good morning, John
+                  </h1>
+                  <p className="text-gray-600 text-lg font-medium">Ready to manage your finances?</p>
+                </div>
               </div>
-              <p className="text-blue-100 text-lg">Your financial dashboard awaits</p>
             </div>
             <div className="flex items-center space-x-3">
-              <Button variant="secondary" size="sm" className="bg-white/20 hover:bg-white/30 text-white border-white/30">
+              <Button variant="ghost" size="sm" className="bg-white/50 hover:bg-white/70 backdrop-blur-sm border border-white/30 shadow-sm">
                 <Bell className="w-4 h-4 mr-2" />
-                Notifications
+                Alerts
               </Button>
-              <Button variant="secondary" size="sm" className="bg-white/20 hover:bg-white/30 text-white border-white/30">
+              <Button variant="ghost" size="sm" className="bg-white/50 hover:bg-white/70 backdrop-blur-sm border border-white/30 shadow-sm">
                 <Shield className="w-4 h-4 mr-2" />
                 Security
               </Button>
@@ -49,84 +61,98 @@ const Index = () => {
           </div>
         </div>
 
-        {/* Enhanced Balance Overview */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <Card className="md:col-span-2 border-0 shadow-lg bg-gradient-to-br from-white to-gray-50">
-            <CardHeader className="pb-4">
+        {/* Enhanced Balance Overview with modern cards */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <Card className="lg:col-span-2 border-0 shadow-xl bg-white/70 backdrop-blur-sm hover:shadow-2xl transition-all duration-500 hover:-translate-y-1">
+            <CardHeader className="pb-6">
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="p-3 bg-green-100 rounded-full">
-                    <TrendingUp className="w-6 h-6 text-green-600" />
+                <div className="flex items-center gap-4">
+                  <div className="w-14 h-14 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl flex items-center justify-center shadow-lg">
+                    <TrendingUp className="w-7 h-7 text-white" />
                   </div>
                   <div>
-                    <CardTitle className="text-2xl text-gray-800">Total Balance</CardTitle>
-                    <CardDescription className="text-gray-600">All accounts combined</CardDescription>
+                    <CardTitle className="text-2xl font-bold text-gray-900">Total Balance</CardTitle>
+                    <CardDescription className="text-gray-600 font-medium">Across all accounts</CardDescription>
                   </div>
                 </div>
+                <Button variant="ghost" size="sm" className="text-gray-500 hover:text-gray-700">
+                  <ChevronRight className="w-4 h-4" />
+                </Button>
               </div>
             </CardHeader>
             <CardContent className="pt-0">
-              <div className="text-5xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent mb-6">
+              <div className="text-5xl font-bold bg-gradient-to-r from-emerald-600 via-teal-600 to-green-600 bg-clip-text text-transparent mb-8">
                 ${totalBalance.toLocaleString('en-US', { minimumFractionDigits: 2 })}
               </div>
-              <div className="bg-white/80 rounded-xl p-4 shadow-sm">
+              <div className="bg-gradient-to-r from-white/80 to-gray-50/80 backdrop-blur-sm rounded-2xl p-6 border border-white/50 shadow-inner">
                 <BalanceChart />
               </div>
             </CardContent>
           </Card>
 
-          <Card className="border-0 shadow-lg bg-gradient-to-br from-white to-purple-50">
-            <CardHeader className="pb-4">
-              <div className="flex items-center gap-3">
-                <div className="p-3 bg-purple-100 rounded-full">
-                  <CreditCard className="w-6 h-6 text-purple-600" />
+          <Card className="border-0 shadow-xl bg-white/70 backdrop-blur-sm hover:shadow-2xl transition-all duration-500 hover:-translate-y-1">
+            <CardHeader className="pb-6">
+              <div className="flex items-center gap-4">
+                <div className="w-14 h-14 bg-gradient-to-br from-violet-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg">
+                  <CreditCard className="w-7 h-7 text-white" />
                 </div>
                 <div>
-                  <CardTitle className="text-xl text-gray-800">Monthly Spending</CardTitle>
-                  <CardDescription className="text-gray-600">Budget overview</CardDescription>
+                  <CardTitle className="text-xl font-bold text-gray-900">Monthly Budget</CardTitle>
+                  <CardDescription className="text-gray-600 font-medium">Spending overview</CardDescription>
                 </div>
               </div>
             </CardHeader>
             <CardContent className="pt-0">
               <div className="space-y-6">
                 <div>
-                  <div className="flex justify-between text-sm mb-3 font-medium">
-                    <span className="text-gray-700">Spent this month</span>
+                  <div className="flex justify-between text-sm mb-4 font-semibold">
+                    <span className="text-gray-700">This month</span>
                     <span className="text-gray-900">$1,234 / $2,000</span>
                   </div>
-                  <Progress value={62} className="h-3 bg-gray-200" />
+                  <div className="relative">
+                    <Progress value={62} className="h-4 bg-gray-200/80 shadow-inner" />
+                    <div className="absolute inset-0 bg-gradient-to-r from-violet-500/20 to-purple-500/20 rounded-full"></div>
+                  </div>
                 </div>
-                <div className="flex items-center justify-between">
-                  <Badge variant="secondary" className="bg-green-100 text-green-800 hover:bg-green-200">
+                <div className="flex items-center justify-between p-4 bg-gradient-to-r from-emerald-50 to-teal-50 rounded-xl border border-emerald-200/50">
+                  <Badge variant="secondary" className="bg-emerald-100 text-emerald-800 hover:bg-emerald-200 font-semibold px-3 py-1">
                     38% remaining
                   </Badge>
-                  <span className="text-2xl font-bold text-green-600">$766</span>
+                  <span className="text-3xl font-bold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">
+                    $766
+                  </span>
                 </div>
               </div>
             </CardContent>
           </Card>
         </div>
 
-        {/* Enhanced Quick Actions */}
-        <div className="bg-white rounded-2xl shadow-lg p-1">
+        {/* Modern Quick Actions */}
+        <div className="bg-white/70 backdrop-blur-sm rounded-3xl shadow-xl border border-white/20 p-2 hover:shadow-2xl transition-all duration-500">
           <QuickActions onTransferClick={() => setIsTransferModalOpen(true)} />
         </div>
 
-        {/* Enhanced Accounts Grid */}
+        {/* Enhanced Accounts Section */}
         <div>
-          <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-3">
-            <div className="w-1 h-8 bg-gradient-to-b from-blue-500 to-purple-600 rounded-full"></div>
-            Your Accounts
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="flex items-center justify-between mb-8">
+            <h2 className="text-3xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent flex items-center gap-4">
+              <div className="w-2 h-10 bg-gradient-to-b from-blue-500 via-purple-500 to-emerald-500 rounded-full shadow-lg"></div>
+              Your Accounts
+            </h2>
+            <Button variant="outline" className="hover:bg-gray-50 border-gray-200 shadow-sm">
+              View All
+              <ChevronRight className="w-4 h-4 ml-2" />
+            </Button>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {accounts.map((account) => (
               <AccountCard key={account.id} account={account} />
             ))}
           </div>
         </div>
 
-        {/* Enhanced Transaction History */}
-        <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
+        {/* Modern Transaction History */}
+        <div className="bg-white/70 backdrop-blur-sm rounded-3xl shadow-xl border border-white/20 overflow-hidden hover:shadow-2xl transition-all duration-500">
           <TransactionHistory />
         </div>
 
