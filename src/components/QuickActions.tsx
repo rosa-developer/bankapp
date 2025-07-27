@@ -5,16 +5,17 @@ import { ArrowRightLeft, CreditCard, PiggyBank, FileText, Smartphone, Users } fr
 
 interface QuickActionsProps {
   onTransferClick: () => void;
+  onSendMoneyClick: () => void;
 }
 
-export const QuickActions = ({ onTransferClick }: QuickActionsProps) => {
+export const QuickActions = ({ onTransferClick, onSendMoneyClick }: QuickActionsProps) => {
   const actions = [
     { icon: ArrowRightLeft, label: "Transfer", onClick: onTransferClick, gradient: "from-blue-500 via-blue-600 to-indigo-600" },
     { icon: CreditCard, label: "Pay Bills", onClick: () => {}, gradient: "from-emerald-500 via-green-600 to-teal-600" },
     { icon: PiggyBank, label: "Save Money", onClick: () => {}, gradient: "from-violet-500 via-purple-600 to-indigo-600" },  
     { icon: FileText, label: "Statements", onClick: () => {}, gradient: "from-orange-500 via-amber-600 to-yellow-600" },
     { icon: Smartphone, label: "Mobile Pay", onClick: () => {}, gradient: "from-pink-500 via-rose-600 to-red-600" },
-    { icon: Users, label: "Send Money", onClick: () => {}, gradient: "from-cyan-500 via-blue-600 to-indigo-600" },
+    { icon: Users, label: "Send Money", onClick: onSendMoneyClick, gradient: "from-cyan-500 via-blue-600 to-indigo-600" },
   ];
 
   return (

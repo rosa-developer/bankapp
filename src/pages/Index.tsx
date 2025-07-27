@@ -10,9 +10,11 @@ import { TransferModal } from "@/components/TransferModal";
 import { QuickActions } from "@/components/QuickActions";
 import { BalanceChart } from "@/components/BalanceChart";
 import { CreditCard, TrendingUp, Shield, Bell, Sparkles, ChevronRight } from "lucide-react";
+import { SendMoneyModal } from "@/components/SendMoneyModal";
 
 const Index = () => {
   const [isTransferModalOpen, setIsTransferModalOpen] = useState(false);
+  const [isSendMoneyModalOpen, setIsSendMoneyModalOpen] = useState(false);
   
   const accounts = [
     { id: "1", name: "Checking Account", balance: 2450.75, type: "checking", accountNumber: "****1234" },
@@ -129,7 +131,10 @@ const Index = () => {
 
         {/* Modern Quick Actions */}
         <div className="bg-white/70 backdrop-blur-sm rounded-3xl shadow-xl border border-white/20 p-2 hover:shadow-2xl transition-all duration-500">
-          <QuickActions onTransferClick={() => setIsTransferModalOpen(true)} />
+          <QuickActions 
+            onTransferClick={() => setIsTransferModalOpen(true)}
+            onSendMoneyClick={() => setIsSendMoneyModalOpen(true)}
+          />
         </div>
 
         {/* Enhanced Accounts Section */}
@@ -160,6 +165,12 @@ const Index = () => {
         <TransferModal 
           isOpen={isTransferModalOpen} 
           onClose={() => setIsTransferModalOpen(false)}
+          accounts={accounts}
+        />
+        {/* Send Money Modal (to be implemented) */}
+        <SendMoneyModal 
+          isOpen={isSendMoneyModalOpen} 
+          onClose={() => setIsSendMoneyModalOpen(false)}
           accounts={accounts}
         />
       </div>
